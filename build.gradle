@@ -2,9 +2,13 @@
 
 buildscript {
     ext.kotlin_version = '1.3.21'
+    ext.supportLibVersion = '28.0.0'
+    ext.constraintVersion = '1.1.3'
+    ext.okHttpVersion = '3.10.0'
     repositories {
         google()
         jcenter()
+        maven { url "https://maven.google.com" }
         
     }
     dependencies {
@@ -19,7 +23,9 @@ allprojects {
     repositories {
         google()
         jcenter()
-        
+        mavenCentral()
+        maven { url "https://maven.google.com" }
+
     }
 }
 

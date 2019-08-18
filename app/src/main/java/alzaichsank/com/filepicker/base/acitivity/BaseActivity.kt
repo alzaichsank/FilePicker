@@ -8,8 +8,8 @@ import alzaichsank.com.filepicker.base.extension.makeGone
 import alzaichsank.com.filepicker.base.extension.makeVisible
 import android.app.ProgressDialog
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.layout_loading.*
 
 open class BaseActivity : AppCompatActivity() {

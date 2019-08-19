@@ -2,8 +2,8 @@
     <string name="app_name">FilePicker</string>
     <string name="progress_loading">Please wait</string>
     <string name="error_general">Sorry, there something problem</string>
-  <string name="open_file_from_galery">open file from galery</string>
-  <string name="open_file_from_document">open file from document</string>
-  <string name="open_file_from_download">open file from download</string>
-  <string name="open_file_from_video">open file from video</string>
+    <string name="open_file_from_galery">open file from galery</string>
+    <string name="open_file_from_document">open file from document</string>
+    <string name="open_file_from_download">open file from download</string>
+    <string name="open_file_from_video">open file from video</string>
 </resources>

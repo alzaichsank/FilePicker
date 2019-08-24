@@ -10,6 +10,7 @@ import android.annotation.SuppressLint
 import android.database.Cursor
 import android.os.Environment
 import androidx.loader.content.CursorLoader
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -17,7 +18,6 @@ import androidx.loader.content.CursorLoader
  */
 object FileUtil {
     fun getRealPath(context: Context, fileUri: Uri): String {
-
         return when {
             // SDK < API11
             Build.VERSION.SDK_INT < 11 -> getRealPathFromURI_BelowAPI11(context, fileUri)
@@ -91,7 +91,7 @@ object FileUtil {
                 }
                 val id = DocumentsContract.getDocumentId(uri)
                 val contentUri = ContentUris.withAppendedId(
-                        Uri.parse("content://downloads/public_downloads"), java.lang.Long.valueOf(id))
+                    Uri.parse("content://downloads/public_downloads"), java.lang.Long.valueOf(id))
                 return getDataColumn(context, contentUri, null, null)
             }
             else if (isMediaDocument(uri)) {
@@ -161,6 +161,28 @@ object FileUtil {
         finally {
             if (cursor != null)
                 cursor!!.close()
+        }
+        return null
+    }
+
+    fun getFileMedia(context: Context, uri: Uri): VideoListData? {
+        var cursor: Cursor? = null
+        val videoProjection = arrayOf(MediaStore.Video.Media._ID, MediaStore.Video.Media.DATA, MediaStore.Video.Media.DURATION, MediaStore.Video.Media.DISPLAY_NAME)
+        try {
+            cursor = context.contentResolver.query(uri, videoProjection, null, null, null)
+            if (cursor != null && cursor.moveToFirst()) {
+                val columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION)
+                val duration = TimeUnit.MILLISECONDS.toSeconds(java.lang.Long.parseLong(cursor.getString(columnIndex)))
+                val index = cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATA)
+                val thumbnail = cursor.getString(index)
+                val titleIndex = cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DISPLAY_NAME)
+                val title = cursor.getString(titleIndex)
+                return VideoListData(title, thumbnail, duration)
+            }
+        }
+        finally {
+            if (cursor != null)
+                cursor.close()
         }
         return null
     }
